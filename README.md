@@ -123,10 +123,11 @@ Use Swagger UI at `/api-docs` to test all endpoints interactively, or use tools 
 - Thunder Client (VS Code extension)
 - cURL
 
-## Deployment
-This API is deployed on Render at: `https://your-app-name.onrender.com`
+## Live Deployment
 
-Documentation available at: `https://your-app-name.onrender.com/api-docs`
+- **Production URL:** https://eduapi-platform.onrender.com
+- **API Documentation:** https://eduapi-platform.onrender.com/api-docs
+- **GitHub Repository:** https://github.com/Nyantakyi-Francis/e-learning-api
 
 ## Week 5 Individual Contributions
 
