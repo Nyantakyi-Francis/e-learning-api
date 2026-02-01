@@ -17,16 +17,16 @@ const options = {
         url: 'https://opensource.org/licenses/MIT'
       }
     },
-    servers: [
-      {
-        url: 'http://localhost:3000',
-        description: 'Development server'
-      },
-      {
-        url: 'https://your-app-name.onrender.com',
-        description: 'Production server'
-      }
-    ],
+servers: [
+  {
+    url: 'http://localhost:3000',
+    description: 'Development server'
+  },
+  {
+    url: 'https://eduapi-platform.onrender.com',
+    description: 'Production server'
+  }
+],
     tags: [
       {
         name: 'Users',
