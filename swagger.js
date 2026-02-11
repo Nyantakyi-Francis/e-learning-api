@@ -6,8 +6,8 @@ const options = {
     openapi: '3.0.0',
     info: {
       title: 'EduAPI - E-Learning Platform API',
-      version: '1.0.0',
-      description: 'A comprehensive API for managing an e-learning platform with users, courses, lessons, enrollments, and reviews.',
+      version: '2.0.0',
+      description: 'A comprehensive API for managing an e-learning platform with users, courses, lessons, enrollments, and reviews. Features include OAuth authentication, data validation, and role-based access control.',
       contact: {
         name: 'Nyantakyi Francis & Edem Essien Offiong',
         email: 'support@eduapi.com'
@@ -17,17 +17,21 @@ const options = {
         url: 'https://opensource.org/licenses/MIT'
       }
     },
-servers: [
-  {
-    url: 'http://localhost:3000',
-    description: 'Development server'
-  },
-  {
-    url: 'https://eduapi-platform.onrender.com',
-    description: 'Production server'
-  }
-],
+    servers: [
+      {
+        url: 'https://eduapi-platform.onrender.com',
+        description: 'Production server (Default)'
+      },
+      {
+        url: 'http://localhost:3000',
+        description: 'Development server'
+      }
+    ],
     tags: [
+      {
+        name: 'Authentication',
+        description: 'OAuth authentication endpoints'
+      },
       {
         name: 'Users',
         description: 'User management endpoints'
@@ -35,6 +39,14 @@ servers: [
       {
         name: 'Courses',
         description: 'Course management endpoints'
+      },
+      {
+        name: 'Lessons',
+        description: 'Lesson management endpoints'
+      },
+      {
+        name: 'Enrollments',
+        description: 'Enrollment management endpoints'
       }
     ]
   },
