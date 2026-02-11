@@ -7,6 +7,8 @@ const {
   updateCourse,
   deleteCourse
 } = require('../controllers/courseController');
+const { validateCourse, handleValidationErrors } = require('../middleware/validation');
+const { isInstructorOrAdmin } = require('../middleware/auth');
 
 /**
  * @swagger
@@ -146,8 +148,10 @@ router.get('/:id', getCourseById);
  * @swagger
  * /api/courses:
  *   post:
- *     summary: Create a new course
+ *     summary: Create a new course (Protected - Instructor/Admin with Validation)
  *     tags: [Courses]
+ *     security:
+ *       - oauth2: []
  *     requestBody:
  *       required: true
  *       content:
@@ -165,8 +169,12 @@ router.get('/:id', getCourseById);
  *             properties:
  *               title:
  *                 type: string
+ *                 minLength: 3
+ *                 maxLength: 100
  *               description:
  *                 type: string
+ *                 minLength: 10
+ *                 maxLength: 2000
  *               instructor_id:
  *                 type: string
  *               category:
@@ -177,8 +185,10 @@ router.get('/:id', getCourseById);
  *                 enum: [beginner, intermediate, advanced]
  *               duration_hours:
  *                 type: number
+ *                 minimum: 0
  *               price:
  *                 type: number
+ *                 minimum: 0
  *               syllabus:
  *                 type: array
  *                 items:
@@ -195,19 +205,25 @@ router.get('/:id', getCourseById);
  *     responses:
  *       201:
  *         description: Course created successfully
+ *       401:
+ *         description: Unauthorized - Login required
+ *       403:
+ *         description: Forbidden - Instructor or Admin role required
  *       400:
  *         description: Validation error
  *       500:
  *         description: Server error
  */
-router.post('/', createCourse);
+router.post('/', isInstructorOrAdmin, validateCourse, handleValidationErrors, createCourse);
 
 /**
  * @swagger
  * /api/courses/{id}:
  *   put:
- *     summary: Update a course
+ *     summary: Update a course (Protected - Instructor/Admin with Validation)
  *     tags: [Courses]
+ *     security:
+ *       - oauth2: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -253,6 +269,10 @@ router.post('/', createCourse);
  *     responses:
  *       200:
  *         description: Course updated successfully
+ *       401:
+ *         description: Unauthorized - Login required
+ *       403:
+ *         description: Forbidden - Instructor or Admin role required
  *       404:
  *         description: Course not found
  *       400:
@@ -260,7 +280,7 @@ router.post('/', createCourse);
  *       500:
  *         description: Server error
  */
-router.put('/:id', updateCourse);
+router.put('/:id', isInstructorOrAdmin, validateCourse, handleValidationErrors, updateCourse);
 
 /**
  * @swagger

@@ -7,6 +7,7 @@ const {
   updateUser,
   deleteUser
 } = require('../controllers/userController');
+const { validateUser, handleValidationErrors } = require('../middleware/validation');
 
 /**
  * @swagger
@@ -134,7 +135,7 @@ router.get('/:id', getUserById);
  * @swagger
  * /api/users:
  *   post:
- *     summary: Create a new user
+ *     summary: Create a new user (With Validation)
  *     tags: [Users]
  *     requestBody:
  *       required: true
@@ -148,15 +149,20 @@ router.get('/:id', getUserById);
  *             properties:
  *               name:
  *                 type: string
+ *                 minLength: 2
+ *                 maxLength: 100
  *               email:
  *                 type: string
+ *                 format: email
  *               role:
  *                 type: string
  *                 enum: [student, instructor, admin]
  *               bio:
  *                 type: string
+ *                 maxLength: 500
  *               profile_picture:
  *                 type: string
+ *                 format: uri
  *     responses:
  *       201:
  *         description: User created successfully
@@ -165,13 +171,13 @@ router.get('/:id', getUserById);
  *       500:
  *         description: Server error
  */
-router.post('/', createUser);
+router.post('/', validateUser, handleValidationErrors, createUser);
 
 /**
  * @swagger
  * /api/users/{id}:
  *   put:
- *     summary: Update a user
+ *     summary: Update a user (With Validation)
  *     tags: [Users]
  *     parameters:
  *       - in: path
@@ -207,7 +213,7 @@ router.post('/', createUser);
  *       500:
  *         description: Server error
  */
-router.put('/:id', updateUser);
+router.put('/:id', validateUser, handleValidationErrors, updateUser);
 
 /**
  * @swagger
