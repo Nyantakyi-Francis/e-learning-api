@@ -23,6 +23,8 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.set('trust proxy', 1);
+
 // Session configuration (required for OAuth)
 app.use(session({
   secret: process.env.SESSION_SECRET || 'your_session_secret_key_change_this',
