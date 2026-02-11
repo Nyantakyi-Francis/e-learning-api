@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+
 const passport = require('./config/passport');
 const { swaggerUi, swaggerSpec } = require('../swagger');
 
