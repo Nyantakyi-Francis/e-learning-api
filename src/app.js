@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const passport = require('./config/passport');
 const { swaggerUi, swaggerSpec } = require('../swagger');
 
@@ -26,10 +27,15 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'your_session_secret_key_change_this',
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI,
+    touchAfter: 24 * 3600 // lazy session update (24 hours)
+  }),
   cookie: {
     secure: process.env.NODE_ENV === 'production', // true in production (HTTPS)
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    httpOnly: true
+    httpOnly: true,
+    sameSite: 'lax'
   }
 }));
 
