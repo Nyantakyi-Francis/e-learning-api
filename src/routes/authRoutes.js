@@ -22,9 +22,12 @@ const passport = require('../config/passport');
  */
 // @desc    Start Google OAuth
 // @route   GET /auth/google
-router.get('/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
-);
+router.get('/google', (req, res, next) => {
+  console.log('OAuth attempt - Client ID:', process.env.GOOGLE_CLIENT_ID ? 'Present' : 'Missing');
+  console.log('OAuth attempt - Client Secret:', process.env.GOOGLE_CLIENT_SECRET ? 'Present' : 'Missing');
+  console.log('OAuth attempt - Callback URL:', process.env.CALLBACK_URL);
+  next();
+}, passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 /**
  * @swagger
